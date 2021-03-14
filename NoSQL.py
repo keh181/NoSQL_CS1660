@@ -59,7 +59,7 @@ except:
     print("Table may exist")
     table = dyndb.Table("DataTable1")
 
-table.meta.client.get_waiter('table_exists').wait(TableName='DataTable')
+table.meta.client.get_waiter('table_exists').wait(TableName='DataTable1')
 
 print(table.item_count)
 
