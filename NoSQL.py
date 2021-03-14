@@ -67,7 +67,6 @@ with open('experiments.csv', 'r') as csvfile:
     csvf = csv.reader(csvfile, delimiter=',', quotechar='|')
     next(csvf)
     for item in csvf:
-        print(item)
         body = open(item[3], 'rb')
         s3.Object('datacont-school', item[3]).put(Body=body)
         md = s3.Object('datacont-school', item[3]).Acl().put(ACL='public-read')
