@@ -1,13 +1,14 @@
 import csv
 import boto3
 
-ak = '' #access key
-sk = '' #secret key
+ak = ''  # access key
+sk = ''  # secret key
 
 s3 = boto3.resource('s3', aws_access_key_id=ak,
                     aws_secret_access_key=sk)
 try:
-    s3.create_bucket(Bucket='datacont-school', CreateBucketConfiguration={'LocationConstraint' : 'us-west-2'})
+    s3.create_bucket(Bucket='datacont-school',
+                     CreateBucketConfiguration={'LocationConstraint': 'us-west-2'})
 except:
     print("this already exists")
 
@@ -59,7 +60,7 @@ except:
     print("Table may exist")
     table = dyndb.Table("DataTable1")
 
-table.meta.client.get_waiter('table_exists').wait(TableName='DataTable1')
+table.meta.client.get_waiter('table_exists').wait(TableName='DataTable')
 
 print(table.item_count)
 
@@ -72,7 +73,7 @@ with open('experiments.csv', 'r') as csvfile:
         md = s3.Object('datacont-school', item[3]).Acl().put(ACL='public-read')
         url = " https://s3-us-west-2.amazonaws.com/datacont-school/"+item[3]
         metadata_item = {'PartitionKey': item[0], 'RowKey': item[1],
-                 'description': item[4], 'date': item[2], 'url': url}
+                         'description': item[4], 'date': item[2], 'url': url}
         try:
             table.put_item(Item=metadata_item)
         except:
@@ -86,5 +87,11 @@ response = table.get_item(
     }
 )
 
+print('''\nQuery = 
+        'PartitionKey': 'experiment1',
+        'RowKey': 'data1' 
+      ''')
+
 item = response['Item']
+print("Item:")
 print(item)
