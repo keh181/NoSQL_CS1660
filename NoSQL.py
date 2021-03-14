@@ -80,11 +80,6 @@ with open('experiments.csv', 'r') as csvfile:
             print("item may already be there or another failure")
 
 
-# ['experiment1', '1', '3/15/2002', 'exp1', 'this is the comment']
-# ['experiment1', '2', '3/15/2002', 'exp2', 'this is the comment2']
-# ['experiment2', '3', '3/16/2002', 'exp3', 'this is the comment3']
-# ['experiment3', '4', '3/16/2002', 'exp4', 'this is the comment233']
-
 response = table.get_item(
     Key={
         'PartitionKey': 'experiment1',
